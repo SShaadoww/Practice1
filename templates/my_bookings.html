@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Мои бронирования{% endblock %}
+
+{% block content %}
+    <h2>Мои бронирования</h2>
+    
+    <form method="GET" class="search-form">
+        <div class="form-group">
+            <label for="passport">Номер паспорта:</label>
+            <input type="text" id="passport" name="passport" required
+                   value="{{ passport or '' }}">
+        </div>
+        <button type="submit" class="button">Найти бронирования</button>
+    </form>
+    
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    
+    {% if bookings %}
+        <div class="bookings-list">
+            {% for booking in bookings %}
+                <div class="booking-card">
+                    <h3>Бронирование #{{ booking.booking_id }}</h3>
+                    <p>Номер: {{ booking.room_number }}</p>
+                    <p>Даты: {{ booking.check_in_date }} - {{ booking.check_out_date }}</p>
+                    <p>Стоимость: {{ booking.total_price }} руб.</p>
+                    <p>Статус: {{ booking.status }}</p>
+                    <p>Оплата: {{ booking.payment_status }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% elif passport %}
+        <p>Бронирований не найдено.</p>
+    {% endif %}
+{% endblock %}

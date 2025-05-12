@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Бронирование номера{% endblock %}
+
+{% block content %}
+    <h2>Бронирование номера {{ room.room_number }} ({{ room.category }})</h2>
+    
+    <div class="room-info">
+        <p>Этаж: {{ room.floor }}</p>
+        <p>Вместимость: {{ room.capacity }} человека</p>
+        <p>Цена за ночь: {{ room.base_price }} руб.</p>
+        <p>Даты: {{ check_in }} - {{ check_out }}</p>
+    </div>
+    
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    
+    <form method="POST" class="booking-form">
+        <div class="form-group">
+            <label for="first_name">Имя*:</label>
+            <input type="text" id="first_name" name="first_name" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Фамилия*:</label>
+            <input type="text" id="last_name" name="last_name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="phone">Телефон*:</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="passport">Номер паспорта*:</label>
+            <input type="text" id="passport" name="passport" required>
+        </div>
+        <input type="hidden" name="check_in" value="{{ check_in }}">
+        <input type="hidden" name="check_out" value="{{ check_out }}">
+        <button type="submit" class="button">Подтвердить бронирование</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <h2>Добро пожаловать в гостиницу "Комфорт"</h2>
+        <p>Уютные номера, отличный сервис и приятные цены</p>
+        <a href="{{ url_for('rooms') }}" class="button">Посмотреть номера</a>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h3>Удобное расположение</h3>
+            <p>В центре города, рядом с основными достопримечательностями</p>
+        </div>
+        <div class="feature">
+            <h3>Комфортные номера</h3>
+            <p>От эконом до люкса - для любого бюджета</p>
+        </div>
+        <div class="feature">
+            <h3>Круглосуточная стойка</h3>
+            <p>Мы всегда рады помочь нашим гостям</p>
+        </div>
+    </section>
+{% endblock %}

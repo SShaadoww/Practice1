@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Номера{% endblock %}
+
+{% block content %}
+    <h2>Наши номера</h2>
+    
+    <form method="POST" class="booking-form">
+        <div class="form-group">
+            <label for="check_in">Дата заезда:</label>
+            <input type="date" id="check_in" name="check_in" required 
+                   value="{{ request.form.check_in or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="check_out">Дата выезда:</label>
+            <input type="date" id="check_out" name="check_out" required
+                   value="{{ request.form.check_out or '' }}">
+        </div>
+        <button type="submit" class="button">Показать доступные номера</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if rooms %}
+        <div class="rooms-list">
+            {% for room in rooms %}
+                <div class="room-card">
+                    <h3>Номер {{ room.room_number }} ({{ room.category }})</h3>
+                    <p>Этаж: {{ room.floor }}</p>
+                    <p>Вместимость: {{ room.capacity }} человека</p>
+                    <p>Цена за ночь: {{ room.base_price }} руб.</p>
+                    <p>{{ room.description }}</p>
+                    <a href="{{ url_for('book', room_id=room.room_id, check_in=request.form.check_in, check_out=request.form.check_out) }}" 
+                       class="button">Забронировать</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% elif request.method == 'POST' and not error %}
+        <p>На выбранные даты нет доступных номеров.</p>
+    {% endif %}
+{% endblock %}
